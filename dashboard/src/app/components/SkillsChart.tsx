@@ -19,6 +19,18 @@ import { Bar, Radar } from 'react-chartjs-2';
 import { Text } from '@tremor/react';
 import studentsData from '../data/students.json';
 
+interface Student {
+  student_id: string;
+  name: string;
+  class: string;
+  comprehension: number;
+  attention: number;
+  focus: number;
+  retention: number;
+  engagement_time: number;
+  assessment_score: number;
+}
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -40,7 +52,7 @@ export default function SkillsChart() {
 
   useEffect(() => {
     // Calculate real averages from the 1000-student dataset
-    const students = studentsData as any[];
+    const students = studentsData as Student[];
     const totalStudents = students.length;
     
     const avgComprehension = Math.round(students.reduce((sum, s) => sum + s.comprehension, 0) / totalStudents);

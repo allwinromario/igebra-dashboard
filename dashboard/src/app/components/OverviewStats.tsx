@@ -5,6 +5,18 @@ import { useState, useEffect } from 'react';
 import { UserGroupIcon, ChartBarIcon, ClockIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import studentsData from '../data/students.json';
 
+interface Student {
+  student_id: string;
+  name: string;
+  class: string;
+  comprehension: number;
+  attention: number;
+  focus: number;
+  retention: number;
+  engagement_time: number;
+  assessment_score: number;
+}
+
 interface Stats {
   totalStudents: number;
   avgScore: number;
@@ -22,7 +34,7 @@ export default function OverviewStats() {
 
   useEffect(() => {
     // Calculate real statistics from the 1000-student dataset
-    const students = studentsData as any[];
+    const students = studentsData as Student[];
     const totalStudents = students.length;
     
     // Calculate averages
