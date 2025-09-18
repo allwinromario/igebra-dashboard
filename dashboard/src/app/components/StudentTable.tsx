@@ -57,7 +57,7 @@ export default function StudentTable() {
     return 'text-red-600 font-bold';
   };
 
-  // Calculate averages for the metrics bar
+  // Calculate averages
   const averages = {
     comprehension: Math.round(students.reduce((acc, s) => acc + s.comprehension, 0) / students.length),
     attention: Math.round(students.reduce((acc, s) => acc + s.attention, 0) / students.length),
@@ -68,44 +68,43 @@ export default function StudentTable() {
 
   return (
     <div className="space-y-6">
-      {/* Metrics Bar */}
-      <div className="grid grid-cols-5 gap-4 mb-6">
-        <div className="text-center">
-          <Text className="text-sm text-gray-600">Comprehension</Text>
-          <Text className="text-lg font-bold text-blue-600">{averages.comprehension}%</Text>
-        </div>
-        <div className="text-center">
-          <Text className="text-sm text-gray-600">Attention</Text>
-          <Text className="text-lg font-bold text-blue-600">{averages.attention}%</Text>
-        </div>
-        <div className="text-center">
-          <Text className="text-sm text-gray-600">Focus</Text>
-          <Text className="text-lg font-bold text-blue-600">{averages.focus}%</Text>
-        </div>
-        <div className="text-center">
-          <Text className="text-sm text-gray-600">Retention</Text>
-          <Text className="text-lg font-bold text-blue-600">{averages.retention}%</Text>
-        </div>
-        <div className="text-center">
-          <Text className="text-sm text-gray-600">Engagement</Text>
-          <Text className="text-lg font-bold text-blue-600">{averages.engagement}%</Text>
-        </div>
-      </div>
-
       {/* Search and Info Bar */}
-      <div className="flex justify-between items-center mb-4">
-        <div className="w-full max-w-md">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="w-full sm:w-96">
           <TextInput
             icon={MagnifyingGlassIcon}
             placeholder="Search by ID, name or class..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full"
           />
         </div>
         <Text className="text-gray-600">
           Showing {Math.min(filteredStudents.length, 10)} of {filteredStudents.length} students
         </Text>
+      </div>
+
+      {/* Metrics Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+        <Card className="p-4">
+          <Text className="text-sm text-gray-600">Comprehension</Text>
+          <Text className="text-2xl font-bold text-blue-600">{averages.comprehension}%</Text>
+        </Card>
+        <Card className="p-4">
+          <Text className="text-sm text-gray-600">Attention</Text>
+          <Text className="text-2xl font-bold text-blue-600">{averages.attention}%</Text>
+        </Card>
+        <Card className="p-4">
+          <Text className="text-sm text-gray-600">Focus</Text>
+          <Text className="text-2xl font-bold text-blue-600">{averages.focus}%</Text>
+        </Card>
+        <Card className="p-4">
+          <Text className="text-sm text-gray-600">Retention</Text>
+          <Text className="text-2xl font-bold text-blue-600">{averages.retention}%</Text>
+        </Card>
+        <Card className="p-4 sm:col-span-1 col-span-2">
+          <Text className="text-sm text-gray-600">Engagement</Text>
+          <Text className="text-2xl font-bold text-blue-600">{averages.engagement} min</Text>
+        </Card>
       </div>
       
       {/* Table */}
@@ -113,15 +112,15 @@ export default function StudentTable() {
         <Table>
           <TableHead>
             <TableRow className="bg-gray-50">
-              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">ID</TableHeaderCell>
-              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Name</TableHeaderCell>
-              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Class</TableHeaderCell>
-              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Comp.</TableHeaderCell>
-              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Attn.</TableHeaderCell>
-              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Focus</TableHeaderCell>
-              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Ret.</TableHeaderCell>
-              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Eng. (min)</TableHeaderCell>
-              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Score</TableHeaderCell>
+              <TableHeaderCell className="p-3">ID</TableHeaderCell>
+              <TableHeaderCell className="p-3">Name</TableHeaderCell>
+              <TableHeaderCell className="p-3">Class</TableHeaderCell>
+              <TableHeaderCell className="p-3">Comp.</TableHeaderCell>
+              <TableHeaderCell className="p-3">Attn.</TableHeaderCell>
+              <TableHeaderCell className="p-3">Focus</TableHeaderCell>
+              <TableHeaderCell className="p-3">Ret.</TableHeaderCell>
+              <TableHeaderCell className="p-3">Eng. (min)</TableHeaderCell>
+              <TableHeaderCell className="p-3">Score</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>

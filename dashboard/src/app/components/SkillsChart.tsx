@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,21 +9,21 @@ import {
   Title,
   Tooltip,
   Legend,
+  RadialLinearScale,
   PointElement,
   LineElement,
-  RadialLinearScale,
   Filler
 } from 'chart.js';
-import { Bar, Line, Radar } from 'react-chartjs-2';
+import { Bar, Radar } from 'react-chartjs-2';
 import { Card, Tab, TabGroup, TabList, TabPanel, TabPanels } from '@tremor/react';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  RadialLinearScale,
   PointElement,
   LineElement,
-  RadialLinearScale,
   Title,
   Tooltip,
   Legend,
@@ -31,11 +31,12 @@ ChartJS.register(
 );
 
 const labels = ['Comprehension', 'Attention', 'Focus', 'Retention', 'Engagement'];
-const scores = [70, 65, 75, 68, 45];
+const scores = [77, 74, 75, 76, 45];
 
 export default function SkillsChart() {
   const [activeTab, setActiveTab] = useState(0);
-  const [chartData, setChartData] = useState({
+
+  const barData = {
     labels,
     datasets: [
       {
@@ -46,7 +47,7 @@ export default function SkillsChart() {
         borderWidth: 2,
       }
     ],
-  });
+  };
 
   const barOptions = {
     responsive: true,
@@ -56,8 +57,8 @@ export default function SkillsChart() {
         position: 'top' as const,
         labels: {
           font: {
-            size: 14,
-            weight: 'bold' as const
+            size: 12,
+            weight: '600' as const
           }
         }
       },
@@ -102,48 +103,6 @@ export default function SkillsChart() {
     }
   };
 
-  const lineOptions = {
-    ...barOptions,
-    elements: {
-      line: {
-        tension: 0.4
-      }
-    }
-  };
-
-  const radarOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      r: {
-        beginAtZero: true,
-        max: 100,
-        ticks: {
-          stepSize: 20
-        },
-        grid: {
-          color: 'rgba(0, 0, 0, 0.1)'
-        },
-        pointLabels: {
-          font: {
-            size: 12
-          }
-        }
-      }
-    },
-    plugins: {
-      legend: {
-        position: 'top' as const,
-        labels: {
-          font: {
-            size: 14,
-            weight: 'bold' as const
-          }
-        }
-      }
-    }
-  };
-
   const radarData = {
     labels,
     datasets: [
@@ -161,42 +120,65 @@ export default function SkillsChart() {
     ]
   };
 
+  const radarOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 100,
+        ticks: {
+          stepSize: 20,
+          font: {
+            size: 12
+          }
+        },
+        grid: {
+          color: 'rgba(0, 0, 0, 0.1)'
+        },
+        pointLabels: {
+          font: {
+            size: 12
+          }
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: false
+      }
+    }
+  };
+
   return (
     <div className="w-full h-full">
       <TabGroup>
         <TabList className="mb-4">
           <Tab>Bar Chart</Tab>
-          <Tab>Line Chart</Tab>
           <Tab>Radar Chart</Tab>
         </TabList>
         
         <TabPanels>
           <TabPanel>
-            <div className="h-[300px] sm:h-[400px]">
-              <Bar options={barOptions} data={chartData} />
+            <div className="h-[300px]">
+              <Bar options={barOptions} data={barData} />
             </div>
           </TabPanel>
           
           <TabPanel>
-            <div className="h-[300px] sm:h-[400px]">
-              <Line options={lineOptions} data={chartData} />
-            </div>
-          </TabPanel>
-          
-          <TabPanel>
-            <div className="h-[300px] sm:h-[400px]">
+            <div className="h-[300px]">
               <Radar options={radarOptions} data={radarData} />
             </div>
           </TabPanel>
         </TabPanels>
       </TabGroup>
 
-      <div className="mt-4 grid grid-cols-2 sm:grid-cols-5 gap-2">
+      <div className="mt-4 grid grid-cols-5 gap-2 text-center">
         {labels.map((label, index) => (
-          <Card key={label} className="p-2 text-center">
-            <p className="text-sm font-medium text-gray-600">{label}</p>
-            <p className="text-lg font-bold text-blue-600">{scores[index]}%</p>
-          </Card>
+          <div key={label} className="p-2 bg-gray-50 rounded-lg">
+            <div className="text-sm font-medium text-gray-600">{label}</div>
+            <div className="text-lg font-bold text-blue-600">{scores[index]}%</div>
+          </div>
         ))}
       </div>
     </div>
