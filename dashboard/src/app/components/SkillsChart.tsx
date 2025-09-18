@@ -12,7 +12,8 @@ import {
   RadialLinearScale,
   PointElement,
   LineElement,
-  Filler
+  Filler,
+  ChartOptions
 } from 'chart.js';
 import { Bar, Radar } from 'react-chartjs-2';
 import { Text } from '@tremor/react';
@@ -31,7 +32,7 @@ ChartJS.register(
 );
 
 export default function SkillsChart() {
-  const [activeChart, setActiveChart] = useState('bar'); // 'bar' or 'radar'
+  const [activeChart, setActiveChart] = useState('bar');
   
   const labels = ['Comprehension', 'Attention', 'Focus', 'Retention', 'Engagement'];
   const scores = [74, 74, 76, 76, 45];
@@ -49,25 +50,25 @@ export default function SkillsChart() {
     ],
   };
 
-  const barOptions = {
+  const barOptions: ChartOptions<'bar'> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'top',
         labels: {
           font: {
-            size: 12,
-            weight: 'bold' // Changed from '600' to 'bold'
-          }
+            size: 12
+          },
+          boxWidth: 20,
+          padding: 20
         }
       },
       tooltip: {
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         padding: 12,
         titleFont: {
-          size: 14,
-          weight: 'bold'
+          size: 14
         },
         bodyFont: {
           size: 13
@@ -117,7 +118,7 @@ export default function SkillsChart() {
     ]
   };
 
-  const radarOptions = {
+  const radarOptions: ChartOptions<'radar'> = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -152,9 +153,9 @@ export default function SkillsChart() {
       <div className="flex justify-center space-x-4 mb-6">
         <button
           onClick={() => setActiveChart('bar')}
-          className={`px-4 py-2 rounded-lg transition-colors ${
+          className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
             activeChart === 'bar'
-              ? 'bg-blue-600 text-white'
+              ? 'bg-blue-600 text-white shadow-md'
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
         >
@@ -162,9 +163,9 @@ export default function SkillsChart() {
         </button>
         <button
           onClick={() => setActiveChart('radar')}
-          className={`px-4 py-2 rounded-lg transition-colors ${
+          className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
             activeChart === 'radar'
-              ? 'bg-blue-600 text-white'
+              ? 'bg-blue-600 text-white shadow-md'
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
         >
@@ -172,14 +173,17 @@ export default function SkillsChart() {
         </button>
       </div>
 
-      <div className="h-[300px]">
-        {activeChart === 'bar' && <Bar options={barOptions} data={barData} />}
-        {activeChart === 'radar' && <Radar options={radarOptions} data={radarData} />}
+      <div className="h-[300px] w-full">
+        {activeChart === 'bar' ? (
+          <Bar options={barOptions} data={barData} />
+        ) : (
+          <Radar options={radarOptions} data={radarData} />
+        )}
       </div>
 
-      <div className="grid grid-cols-5 gap-4 mt-6">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mt-6">
         {labels.map((label, index) => (
-          <div key={label} className="text-center">
+          <div key={label} className="text-center p-3 bg-white rounded-lg shadow-sm">
             <Text className="text-sm font-medium text-gray-600">{label}</Text>
             <Text className="text-lg font-bold text-blue-600">{scores[index]}%</Text>
           </div>
