@@ -15,102 +15,53 @@ import {
 } from '@tremor/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
-interface Student {
-  student_id: number;
-  name: string;
-  class: string;
-  comprehension: number;
-  attention: number;
-  focus: number;
-  retention: number;
-  engagement_time: number;
-  assessment_score: number;
-}
-
-const generateMockStudents = (count: number): Student[] => {
-  return Array.from({ length: count }, (_, i) => ({
-    student_id: i + 1,
-    name: `Student_${i + 1}`,
-    class: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)],
-    comprehension: Math.round(Math.random() * 30 + 60),
-    attention: Math.round(Math.random() * 30 + 60),
-    focus: Math.round(Math.random() * 30 + 60),
-    retention: Math.round(Math.random() * 30 + 60),
-    engagement_time: Math.round(Math.random() * 30 + 30),
-    assessment_score: Math.round(Math.random() * 30 + 60),
-  }));
-};
+// ... (keep the interfaces and helper functions)
 
 export default function StudentTable() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [students] = useState<Student[]>(generateMockStudents(50));
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  const filteredStudents = students.filter(student =>
-    student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.class.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.student_id.toString().includes(searchTerm)
-  );
-
-  const totalPages = Math.ceil(filteredStudents.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedStudents = filteredStudents.slice(startIndex, startIndex + itemsPerPage);
-
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-emerald-600 font-bold';
-    if (score >= 70) return 'text-blue-600 font-bold';
-    if (score >= 60) return 'text-amber-600 font-bold';
-    return 'text-red-600 font-bold';
-  };
-
-  // Calculate averages
-  const averages = {
-    comprehension: Math.round(students.reduce((acc, s) => acc + s.comprehension, 0) / students.length),
-    attention: Math.round(students.reduce((acc, s) => acc + s.attention, 0) / students.length),
-    focus: Math.round(students.reduce((acc, s) => acc + s.focus, 0) / students.length),
-    retention: Math.round(students.reduce((acc, s) => acc + s.retention, 0) / students.length),
-    engagement: Math.round(students.reduce((acc, s) => acc + s.engagement_time, 0) / students.length),
-  };
+  // ... (keep the state and other logic)
 
   return (
     <div className="space-y-6">
-      {/* Metrics Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <Card className="bg-white shadow-sm p-4">
-          <div className="flex flex-col items-center">
-            <Text className="text-sm font-medium text-gray-600 mb-1">Comprehension</Text>
-            <Text className="text-2xl font-bold text-blue-600">{averages.comprehension}%</Text>
+      {/* Metrics Cards with improved alignment */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
+          <div className="flex flex-col items-center justify-center text-center">
+            <Text className="text-base font-medium text-gray-600 mb-2">Comprehension</Text>
+            <div className="text-3xl font-bold text-blue-600">{averages.comprehension}%</div>
           </div>
-        </Card>
-        <Card className="bg-white shadow-sm p-4">
-          <div className="flex flex-col items-center">
-            <Text className="text-sm font-medium text-gray-600 mb-1">Attention</Text>
-            <Text className="text-2xl font-bold text-blue-600">{averages.attention}%</Text>
+        </div>
+        
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
+          <div className="flex flex-col items-center justify-center text-center">
+            <Text className="text-base font-medium text-gray-600 mb-2">Attention</Text>
+            <div className="text-3xl font-bold text-blue-600">{averages.attention}%</div>
           </div>
-        </Card>
-        <Card className="bg-white shadow-sm p-4">
-          <div className="flex flex-col items-center">
-            <Text className="text-sm font-medium text-gray-600 mb-1">Focus</Text>
-            <Text className="text-2xl font-bold text-blue-600">{averages.focus}%</Text>
+        </div>
+        
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
+          <div className="flex flex-col items-center justify-center text-center">
+            <Text className="text-base font-medium text-gray-600 mb-2">Focus</Text>
+            <div className="text-3xl font-bold text-blue-600">{averages.focus}%</div>
           </div>
-        </Card>
-        <Card className="bg-white shadow-sm p-4">
-          <div className="flex flex-col items-center">
-            <Text className="text-sm font-medium text-gray-600 mb-1">Retention</Text>
-            <Text className="text-2xl font-bold text-blue-600">{averages.retention}%</Text>
+        </div>
+        
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
+          <div className="flex flex-col items-center justify-center text-center">
+            <Text className="text-base font-medium text-gray-600 mb-2">Retention</Text>
+            <div className="text-3xl font-bold text-blue-600">{averages.retention}%</div>
           </div>
-        </Card>
-        <Card className="bg-white shadow-sm p-4 col-span-2 md:col-span-1">
-          <div className="flex flex-col items-center">
-            <Text className="text-sm font-medium text-gray-600 mb-1">Engagement</Text>
-            <Text className="text-2xl font-bold text-blue-600">{averages.engagement} min</Text>
+        </div>
+        
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
+          <div className="flex flex-col items-center justify-center text-center">
+            <Text className="text-base font-medium text-gray-600 mb-2">Engagement</Text>
+            <div className="text-3xl font-bold text-blue-600">{averages.engagement} min</div>
           </div>
-        </Card>
+        </div>
       </div>
 
       {/* Search and Info Bar */}
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-4 rounded-lg shadow-sm">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-4 rounded-xl shadow-sm">
         <div className="w-full sm:w-96">
           <div className="relative">
             <input
@@ -139,7 +90,7 @@ export default function StudentTable() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
             <TableHead>
@@ -180,25 +131,25 @@ export default function StudentTable() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200">
+          <div className="flex items-center justify-between px-6 py-4 bg-white border-t border-gray-200">
             <div className="flex-1 flex justify-between sm:hidden">
               <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className={`relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md
+                className={`relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
                           ${currentPage === 1 
                             ? 'text-gray-400 bg-gray-50 cursor-not-allowed' 
-                            : 'text-blue-600 bg-white hover:bg-blue-50'}`}
+                            : 'text-blue-600 bg-white hover:bg-blue-50 border border-gray-300'}`}
               >
                 Previous
               </button>
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className={`relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md
+                className={`relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
                           ${currentPage === totalPages 
                             ? 'text-gray-400 bg-gray-50 cursor-not-allowed' 
-                            : 'text-blue-600 bg-white hover:bg-blue-50'}`}
+                            : 'text-blue-600 bg-white hover:bg-blue-50 border border-gray-300'}`}
               >
                 Next
               </button>
@@ -211,30 +162,32 @@ export default function StudentTable() {
                 </p>
               </div>
               <div>
-                <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                <nav className="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px">
                   <button
                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
-                    className={`relative inline-flex items-center px-4 py-2 rounded-l-md border
+                    className={`relative inline-flex items-center px-4 py-2 rounded-l-lg border
                               text-sm font-medium ${
                                 currentPage === 1
                                   ? 'bg-gray-50 text-gray-400 cursor-not-allowed'
-                                  : 'bg-white text-blue-600 hover:bg-blue-50'
+                                  : 'bg-white text-blue-600 hover:bg-blue-50 border-gray-300'
                               }`}
                   >
+                    <ChevronLeftIcon className="h-5 w-5 mr-2" />
                     Previous
                   </button>
                   <button
                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
-                    className={`relative inline-flex items-center px-4 py-2 rounded-r-md border
+                    className={`relative inline-flex items-center px-4 py-2 rounded-r-lg border
                               text-sm font-medium ${
                                 currentPage === totalPages
                                   ? 'bg-gray-50 text-gray-400 cursor-not-allowed'
-                                  : 'bg-white text-blue-600 hover:bg-blue-50'
+                                  : 'bg-white text-blue-600 hover:bg-blue-50 border-gray-300'
                               }`}
                   >
                     Next
+                    <ChevronRightIcon className="h-5 w-5 ml-2" />
                   </button>
                 </nav>
               </div>
