@@ -1,59 +1,60 @@
-# Cognitive Skills & Student Performance Dashboard
+# Student Performance Dashboard
 
-This project analyzes student cognitive skills and their correlation with academic performance, featuring a machine learning model for performance prediction and an interactive dashboard.
+An interactive dashboard for analyzing student cognitive skills and performance metrics.
+
+## Features
+
+- Real-time performance monitoring
+- Cognitive skills analysis
+- Interactive data visualizations
+- Student performance tracking
+- Machine learning predictions
+
+## Tech Stack
+
+- **Frontend**: Next.js, TailwindCSS, Tremor
+- **Data Analysis**: Python, Pandas, Scikit-learn
+- **Visualization**: Chart.js, React-ChartJS-2
+
+## Getting Started
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/student-performance-dashboard.git
+```
+
+2. Install dependencies:
+```bash
+# Install Python dependencies
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+# Install Node.js dependencies
+cd dashboard
+npm install
+```
+
+3. Run the development servers:
+```bash
+# Run Jupyter notebook
+jupyter notebook
+
+# Run Next.js dashboard
+cd dashboard
+npm run dev
+```
 
 ## Project Structure
+
 ```
 .
-├── analysis/           # Jupyter notebooks for data analysis and ML
-├── data/              # Data files
-├── dashboard/         # Next.js dashboard application
+├── analysis/           # Jupyter notebooks for data analysis
+├── data/              # Data files and datasets
+├── dashboard/         # Next.js frontend application
 └── requirements.txt   # Python dependencies
 ```
 
-## Setup Instructions
+## Live Demo
 
-### Python Environment Setup
-1. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-### Dashboard Setup
-1. Navigate to the dashboard directory:
-   ```bash
-   cd dashboard
-   ```
-
-2. Install Node.js dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Run the development server:
-   ```bash
-   npm run dev
-   ```
-
-## Features
-- Synthetic student dataset analysis
-- Correlation analysis between cognitive skills and performance
-- ML model for assessment score prediction
-- Student clustering into learning personas
-- Interactive dashboard with:
-  - Overview statistics
-  - Various visualization charts
-  - Searchable/sortable student table
-  - Key insights section
-
-## Tech Stack
-- Python (Data Analysis & ML)
-- Next.js (Dashboard)
-- Pandas, Scikit-learn (Data Processing & ML)
-- Chart.js/D3.js (Visualizations)
+Visit the live dashboard at: [Your Vercel URL]
