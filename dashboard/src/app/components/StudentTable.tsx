@@ -89,39 +89,39 @@ export default function StudentTable() {
   return (
     <div className="space-y-6">
       {/* Metrics Cards with improved alignment */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
-          <div className="flex flex-col items-center justify-center text-center">
-            <Text className="text-base font-medium text-gray-600 mb-2">Comprehension</Text>
-            <div className="text-3xl font-bold text-blue-600">{averages.comprehension}%</div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6">
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-4 min-h-[120px]">
+          <div className="flex flex-col items-center justify-center text-center h-full">
+            <div className="text-xs sm:text-sm font-medium text-gray-600 mb-3 leading-tight">Comprehension</div>
+            <div className="text-2xl sm:text-3xl font-bold text-blue-600">{averages.comprehension}%</div>
           </div>
         </div>
         
-        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
-          <div className="flex flex-col items-center justify-center text-center">
-            <Text className="text-base font-medium text-gray-600 mb-2">Attention</Text>
-            <div className="text-3xl font-bold text-blue-600">{averages.attention}%</div>
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-4 min-h-[120px]">
+          <div className="flex flex-col items-center justify-center text-center h-full">
+            <div className="text-xs sm:text-sm font-medium text-gray-600 mb-3 leading-tight">Attention</div>
+            <div className="text-2xl sm:text-3xl font-bold text-blue-600">{averages.attention}%</div>
           </div>
         </div>
         
-        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
-          <div className="flex flex-col items-center justify-center text-center">
-            <Text className="text-base font-medium text-gray-600 mb-2">Focus</Text>
-            <div className="text-3xl font-bold text-blue-600">{averages.focus}%</div>
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-4 min-h-[120px]">
+          <div className="flex flex-col items-center justify-center text-center h-full">
+            <div className="text-xs sm:text-sm font-medium text-gray-600 mb-3 leading-tight">Focus</div>
+            <div className="text-2xl sm:text-3xl font-bold text-blue-600">{averages.focus}%</div>
           </div>
         </div>
         
-        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
-          <div className="flex flex-col items-center justify-center text-center">
-            <Text className="text-base font-medium text-gray-600 mb-2">Retention</Text>
-            <div className="text-3xl font-bold text-blue-600">{averages.retention}%</div>
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-4 min-h-[120px]">
+          <div className="flex flex-col items-center justify-center text-center h-full">
+            <div className="text-xs sm:text-sm font-medium text-gray-600 mb-3 leading-tight">Retention</div>
+            <div className="text-2xl sm:text-3xl font-bold text-blue-600">{averages.retention}%</div>
           </div>
         </div>
         
-        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
-          <div className="flex flex-col items-center justify-center text-center">
-            <Text className="text-base font-medium text-gray-600 mb-2">Engagement</Text>
-            <div className="text-3xl font-bold text-blue-600">{averages.engagement} min</div>
+        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-4 min-h-[120px]">
+          <div className="flex flex-col items-center justify-center text-center h-full">
+            <div className="text-xs sm:text-sm font-medium text-gray-600 mb-3 leading-tight">Engagement</div>
+            <div className="text-2xl sm:text-3xl font-bold text-blue-600">{averages.engagement} min</div>
           </div>
         </div>
       </div>
