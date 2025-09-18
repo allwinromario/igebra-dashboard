@@ -4,7 +4,7 @@ A comprehensive data science project that analyzes student cognitive skills and 
 
 ## 🌟 Live Demo
 
-**Dashboard**: [https://igebra-dashboard.vercel.app](https://igebradashboard.vercel.app)  
+**Dashboard**: [https://igebradashboard.vercel.app](https://igebradashboard.vercel.app)  
 **Repository**: [https://github.com/allwinromario/igebra-dashboard](https://github.com/allwinromario/igebra-dashboard)
 
 ## 📊 Project Overview
