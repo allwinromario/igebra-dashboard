@@ -7,11 +7,7 @@ const nextConfig = {
   },
   env: {
     BUILD_TIMESTAMP: new Date().toISOString(),
-  },
-  // Disable TypeScript config file usage
-  typescript: {
-    configFile: false,
-  },
+  }
 }
 
 module.exports = nextConfig
