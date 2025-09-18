@@ -30,11 +30,9 @@ ChartJS.register(
   Filler
 );
 
-const labels = ['Comprehension', 'Attention', 'Focus', 'Retention', 'Engagement'];
-const scores = [77, 74, 75, 76, 45];
-
 export default function SkillsChart() {
-  const [activeTab, setActiveTab] = useState(0);
+  const labels = ['Comprehension', 'Attention', 'Focus', 'Retention', 'Engagement'];
+  const scores = [74, 74, 76, 76, 45];
 
   const barData = {
     labels,
@@ -61,9 +59,6 @@ export default function SkillsChart() {
             weight: '600' as const
           }
         }
-      },
-      title: {
-        display: false
       },
       tooltip: {
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -153,7 +148,7 @@ export default function SkillsChart() {
   return (
     <div className="w-full h-full">
       <TabGroup>
-        <TabList className="mb-4">
+        <TabList className="mb-6">
           <Tab>Bar Chart</Tab>
           <Tab>Radar Chart</Tab>
         </TabList>
@@ -172,15 +167,6 @@ export default function SkillsChart() {
           </TabPanel>
         </TabPanels>
       </TabGroup>
-
-      <div className="mt-4 grid grid-cols-5 gap-2 text-center">
-        {labels.map((label, index) => (
-          <div key={label} className="p-2 bg-gray-50 rounded-lg">
-            <div className="text-sm font-medium text-gray-600">{label}</div>
-            <div className="text-lg font-bold text-blue-600">{scores[index]}%</div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

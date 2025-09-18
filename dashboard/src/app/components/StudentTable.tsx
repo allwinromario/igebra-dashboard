@@ -11,6 +11,7 @@ import {
   TextInput,
   Card,
   Text,
+  Title,
 } from '@tremor/react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
@@ -68,8 +69,42 @@ export default function StudentTable() {
 
   return (
     <div className="space-y-6">
-      {/* Search and Info Bar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      {/* Metrics Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <Card className="bg-white shadow-sm">
+          <div className="flex flex-col items-center p-4">
+            <Text className="text-sm font-medium text-gray-600">Comprehension</Text>
+            <Text className="text-2xl font-bold text-blue-600">{averages.comprehension}%</Text>
+          </div>
+        </Card>
+        <Card className="bg-white shadow-sm">
+          <div className="flex flex-col items-center p-4">
+            <Text className="text-sm font-medium text-gray-600">Attention</Text>
+            <Text className="text-2xl font-bold text-blue-600">{averages.attention}%</Text>
+          </div>
+        </Card>
+        <Card className="bg-white shadow-sm">
+          <div className="flex flex-col items-center p-4">
+            <Text className="text-sm font-medium text-gray-600">Focus</Text>
+            <Text className="text-2xl font-bold text-blue-600">{averages.focus}%</Text>
+          </div>
+        </Card>
+        <Card className="bg-white shadow-sm">
+          <div className="flex flex-col items-center p-4">
+            <Text className="text-sm font-medium text-gray-600">Retention</Text>
+            <Text className="text-2xl font-bold text-blue-600">{averages.retention}%</Text>
+          </div>
+        </Card>
+        <Card className="bg-white shadow-sm col-span-2 md:col-span-1">
+          <div className="flex flex-col items-center p-4">
+            <Text className="text-sm font-medium text-gray-600">Engagement</Text>
+            <Text className="text-2xl font-bold text-blue-600">{averages.engagement} min</Text>
+          </div>
+        </Card>
+      </div>
+
+      {/* Search Bar */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
         <div className="w-full sm:w-96">
           <TextInput
             icon={MagnifyingGlassIcon}
@@ -78,49 +113,25 @@ export default function StudentTable() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Text className="text-gray-600">
+        <Text className="text-sm font-medium text-gray-600">
           Showing {Math.min(filteredStudents.length, 10)} of {filteredStudents.length} students
         </Text>
       </div>
 
-      {/* Metrics Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-        <Card className="p-4">
-          <Text className="text-sm text-gray-600">Comprehension</Text>
-          <Text className="text-2xl font-bold text-blue-600">{averages.comprehension}%</Text>
-        </Card>
-        <Card className="p-4">
-          <Text className="text-sm text-gray-600">Attention</Text>
-          <Text className="text-2xl font-bold text-blue-600">{averages.attention}%</Text>
-        </Card>
-        <Card className="p-4">
-          <Text className="text-sm text-gray-600">Focus</Text>
-          <Text className="text-2xl font-bold text-blue-600">{averages.focus}%</Text>
-        </Card>
-        <Card className="p-4">
-          <Text className="text-sm text-gray-600">Retention</Text>
-          <Text className="text-2xl font-bold text-blue-600">{averages.retention}%</Text>
-        </Card>
-        <Card className="p-4 sm:col-span-1 col-span-2">
-          <Text className="text-sm text-gray-600">Engagement</Text>
-          <Text className="text-2xl font-bold text-blue-600">{averages.engagement} min</Text>
-        </Card>
-      </div>
-      
       {/* Table */}
       <div className="overflow-x-auto rounded-lg border border-gray-200">
         <Table>
           <TableHead>
             <TableRow className="bg-gray-50">
-              <TableHeaderCell className="p-3">ID</TableHeaderCell>
-              <TableHeaderCell className="p-3">Name</TableHeaderCell>
-              <TableHeaderCell className="p-3">Class</TableHeaderCell>
-              <TableHeaderCell className="p-3">Comp.</TableHeaderCell>
-              <TableHeaderCell className="p-3">Attn.</TableHeaderCell>
-              <TableHeaderCell className="p-3">Focus</TableHeaderCell>
-              <TableHeaderCell className="p-3">Ret.</TableHeaderCell>
-              <TableHeaderCell className="p-3">Eng. (min)</TableHeaderCell>
-              <TableHeaderCell className="p-3">Score</TableHeaderCell>
+              <TableHeaderCell className="p-3 font-semibold">ID</TableHeaderCell>
+              <TableHeaderCell className="p-3 font-semibold">Name</TableHeaderCell>
+              <TableHeaderCell className="p-3 font-semibold">Class</TableHeaderCell>
+              <TableHeaderCell className="p-3 font-semibold">Comp.</TableHeaderCell>
+              <TableHeaderCell className="p-3 font-semibold">Attn.</TableHeaderCell>
+              <TableHeaderCell className="p-3 font-semibold">Focus</TableHeaderCell>
+              <TableHeaderCell className="p-3 font-semibold">Ret.</TableHeaderCell>
+              <TableHeaderCell className="p-3 font-semibold">Eng. (min)</TableHeaderCell>
+              <TableHeaderCell className="p-3 font-semibold">Score</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
