@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Table,
   TableHead,
@@ -10,8 +10,9 @@ import {
   TableCell,
   TextInput,
   Card,
+  Text,
 } from '@tremor/react';
-import { MagnifyingGlassIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 interface Student {
   student_id: number;
@@ -41,27 +42,13 @@ const generateMockStudents = (count: number): Student[] => {
 
 export default function StudentTable() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [students, setStudents] = useState<Student[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  useEffect(() => {
-    setStudents(generateMockStudents(50));
-  }, []);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm]);
+  const [students] = useState<Student[]>(generateMockStudents(50));
 
   const filteredStudents = students.filter(student =>
     student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.class.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.student_id.toString().includes(searchTerm)
   );
-
-  const totalPages = Math.ceil(filteredStudents.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedStudents = filteredStudents.slice(startIndex, startIndex + itemsPerPage);
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'text-emerald-600 font-bold';
@@ -70,64 +57,88 @@ export default function StudentTable() {
     return 'text-red-600 font-bold';
   };
 
+  // Calculate averages for the metrics bar
+  const averages = {
+    comprehension: Math.round(students.reduce((acc, s) => acc + s.comprehension, 0) / students.length),
+    attention: Math.round(students.reduce((acc, s) => acc + s.attention, 0) / students.length),
+    focus: Math.round(students.reduce((acc, s) => acc + s.focus, 0) / students.length),
+    retention: Math.round(students.reduce((acc, s) => acc + s.retention, 0) / students.length),
+    engagement: Math.round(students.reduce((acc, s) => acc + s.engagement_time, 0) / students.length),
+  };
+
   return (
-    <div className="space-y-4">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div className="relative w-full sm:w-96">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
-          </div>
-          <input
-            type="text"
+    <div className="space-y-6">
+      {/* Metrics Bar */}
+      <div className="grid grid-cols-5 gap-4 mb-6">
+        <div className="text-center">
+          <Text className="text-sm text-gray-600">Comprehension</Text>
+          <Text className="text-lg font-bold text-blue-600">{averages.comprehension}%</Text>
+        </div>
+        <div className="text-center">
+          <Text className="text-sm text-gray-600">Attention</Text>
+          <Text className="text-lg font-bold text-blue-600">{averages.attention}%</Text>
+        </div>
+        <div className="text-center">
+          <Text className="text-sm text-gray-600">Focus</Text>
+          <Text className="text-lg font-bold text-blue-600">{averages.focus}%</Text>
+        </div>
+        <div className="text-center">
+          <Text className="text-sm text-gray-600">Retention</Text>
+          <Text className="text-lg font-bold text-blue-600">{averages.retention}%</Text>
+        </div>
+        <div className="text-center">
+          <Text className="text-sm text-gray-600">Engagement</Text>
+          <Text className="text-lg font-bold text-blue-600">{averages.engagement}%</Text>
+        </div>
+      </div>
+
+      {/* Search and Info Bar */}
+      <div className="flex justify-between items-center mb-4">
+        <div className="w-full max-w-md">
+          <TextInput
+            icon={MagnifyingGlassIcon}
             placeholder="Search by ID, name or class..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg 
-                     text-base text-gray-900 placeholder-gray-500
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                     hover:border-gray-400 transition-colors"
+            className="w-full"
           />
-          {searchTerm && (
-            <button
-              onClick={() => setSearchTerm('')}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-            >
-              <span className="text-sm">Clear</span>
-            </button>
-          )}
         </div>
-        <div className="text-base font-medium text-gray-700 whitespace-nowrap">
-          Showing {paginatedStudents.length} of {filteredStudents.length} students
-        </div>
+        <Text className="text-gray-600">
+          Showing {Math.min(filteredStudents.length, 10)} of {filteredStudents.length} students
+        </Text>
       </div>
       
+      {/* Table */}
       <div className="overflow-x-auto rounded-lg border border-gray-200">
         <Table>
           <TableHead>
-            <TableRow className="bg-gray-100">
-              <TableHeaderCell className="text-base font-bold text-gray-900">ID</TableHeaderCell>
-              <TableHeaderCell className="text-base font-bold text-gray-900">Name</TableHeaderCell>
-              <TableHeaderCell className="text-base font-bold text-gray-900">Class</TableHeaderCell>
-              <TableHeaderCell className="text-base font-bold text-gray-900">Comp.</TableHeaderCell>
-              <TableHeaderCell className="text-base font-bold text-gray-900">Attn.</TableHeaderCell>
-              <TableHeaderCell className="text-base font-bold text-gray-900">Focus</TableHeaderCell>
-              <TableHeaderCell className="text-base font-bold text-gray-900">Ret.</TableHeaderCell>
-              <TableHeaderCell className="text-base font-bold text-gray-900">Eng. (min)</TableHeaderCell>
-              <TableHeaderCell className="text-base font-bold text-gray-900">Score</TableHeaderCell>
+            <TableRow className="bg-gray-50">
+              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">ID</TableHeaderCell>
+              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Name</TableHeaderCell>
+              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Class</TableHeaderCell>
+              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Comp.</TableHeaderCell>
+              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Attn.</TableHeaderCell>
+              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Focus</TableHeaderCell>
+              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Ret.</TableHeaderCell>
+              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Eng. (min)</TableHeaderCell>
+              <TableHeaderCell className="p-3 text-left font-bold text-gray-900">Score</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedStudents.map((student) => (
-              <TableRow key={student.student_id} className="hover:bg-gray-50 transition-colors">
-                <TableCell className="text-base font-semibold text-gray-900">{student.student_id}</TableCell>
-                <TableCell className="text-base text-gray-900">{student.name}</TableCell>
-                <TableCell className="text-base text-gray-900">{student.class}</TableCell>
-                <TableCell className="text-base text-gray-900">{student.comprehension}</TableCell>
-                <TableCell className="text-base text-gray-900">{student.attention}</TableCell>
-                <TableCell className="text-base text-gray-900">{student.focus}</TableCell>
-                <TableCell className="text-base text-gray-900">{student.retention}</TableCell>
-                <TableCell className="text-base text-gray-900">{student.engagement_time}</TableCell>
-                <TableCell className={`text-base ${getScoreColor(student.assessment_score)}`}>
+            {filteredStudents.slice(0, 10).map((student) => (
+              <TableRow 
+                key={student.student_id} 
+                className="hover:bg-gray-50 transition-colors"
+              >
+                <TableCell className="p-3">{student.student_id}</TableCell>
+                <TableCell className="p-3">{student.name}</TableCell>
+                <TableCell className="p-3">{student.class}</TableCell>
+                <TableCell className="p-3">{student.comprehension}</TableCell>
+                <TableCell className="p-3">{student.attention}</TableCell>
+                <TableCell className="p-3">{student.focus}</TableCell>
+                <TableCell className="p-3">{student.retention}</TableCell>
+                <TableCell className="p-3">{student.engagement_time}</TableCell>
+                <TableCell className={`p-3 ${getScoreColor(student.assessment_score)}`}>
                   {student.assessment_score}
                 </TableCell>
               </TableRow>
@@ -135,42 +146,6 @@ export default function StudentTable() {
           </TableBody>
         </Table>
       </div>
-
-      {totalPages > 1 && (
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6 px-2">
-          <button
-            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-            className={`flex items-center px-4 py-2 text-base font-medium rounded-lg
-              ${currentPage === 1 
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                : 'bg-blue-50 text-blue-600 hover:bg-blue-100 active:bg-blue-200'} 
-              transition-colors duration-200 w-full sm:w-auto justify-center`}
-          >
-            <ChevronLeftIcon className="h-5 w-5 mr-2" />
-            Previous
-          </button>
-          
-          <div className="flex items-center gap-2">
-            <span className="text-base font-medium text-gray-700">
-              Page {currentPage} of {totalPages}
-            </span>
-          </div>
-          
-          <button
-            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-            className={`flex items-center px-4 py-2 text-base font-medium rounded-lg
-              ${currentPage === totalPages 
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                : 'bg-blue-50 text-blue-600 hover:bg-blue-100 active:bg-blue-200'} 
-              transition-colors duration-200 w-full sm:w-auto justify-center`}
-          >
-            Next
-            <ChevronRightIcon className="h-5 w-5 ml-2" />
-          </button>
-        </div>
-      )}
     </div>
   );
 }
