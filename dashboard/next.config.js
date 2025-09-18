@@ -5,6 +5,13 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com'],
   },
+  env: {
+    BUILD_TIMESTAMP: new Date().toISOString(),
+  },
+  // Disable TypeScript config file usage
+  typescript: {
+    configFile: false,
+  },
 }
 
 module.exports = nextConfig
