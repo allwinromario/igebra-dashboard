@@ -15,7 +15,7 @@ import {
   Filler
 } from 'chart.js';
 import { Bar, Radar } from 'react-chartjs-2';
-import { Card, Tab, TabGroup, TabList, TabPanel, TabPanels } from '@tremor/react';
+import { Text } from '@tremor/react';
 
 ChartJS.register(
   CategoryScale,
@@ -31,6 +31,8 @@ ChartJS.register(
 );
 
 export default function SkillsChart() {
+  const [activeChart, setActiveChart] = useState('bar'); // 'bar' or 'radar'
+  
   const labels = ['Comprehension', 'Attention', 'Focus', 'Retention', 'Engagement'];
   const scores = [74, 74, 76, 76, 45];
 
@@ -147,26 +149,42 @@ export default function SkillsChart() {
 
   return (
     <div className="w-full h-full">
-      <TabGroup>
-        <TabList className="mb-6">
-          <Tab>Bar Chart</Tab>
-          <Tab>Radar Chart</Tab>
-        </TabList>
-        
-        <TabPanels>
-          <TabPanel>
-            <div className="h-[300px]">
-              <Bar options={barOptions} data={barData} />
-            </div>
-          </TabPanel>
-          
-          <TabPanel>
-            <div className="h-[300px]">
-              <Radar options={radarOptions} data={radarData} />
-            </div>
-          </TabPanel>
-        </TabPanels>
-      </TabGroup>
+      <div className="flex justify-center space-x-4 mb-6">
+        <button
+          onClick={() => setActiveChart('bar')}
+          className={`px-4 py-2 rounded-lg transition-colors ${
+            activeChart === 'bar'
+              ? 'bg-blue-600 text-white'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}
+        >
+          Bar Chart
+        </button>
+        <button
+          onClick={() => setActiveChart('radar')}
+          className={`px-4 py-2 rounded-lg transition-colors ${
+            activeChart === 'radar'
+              ? 'bg-blue-600 text-white'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}
+        >
+          Radar Chart
+        </button>
+      </div>
+
+      <div className="h-[300px]">
+        {activeChart === 'bar' && <Bar options={barOptions} data={barData} />}
+        {activeChart === 'radar' && <Radar options={radarOptions} data={radarData} />}
+      </div>
+
+      <div className="grid grid-cols-5 gap-4 mt-6">
+        {labels.map((label, index) => (
+          <div key={label} className="text-center">
+            <Text className="text-sm font-medium text-gray-600">{label}</Text>
+            <Text className="text-lg font-bold text-blue-600">{scores[index]}%</Text>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
