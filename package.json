@@ -1,0 +1,13 @@
+{
+  "name": "igebra-dashboard-root",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "dashboard"
+  ],
+  "scripts": {
+    "dev": "cd dashboard && npm run dev",
+    "build": "cd dashboard && npm run build",
+    "start": "cd dashboard && npm run start"
+  }
+}
