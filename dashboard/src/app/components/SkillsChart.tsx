@@ -58,7 +58,7 @@ export default function SkillsChart() {
         labels: {
           font: {
             size: 12,
-            weight: '600' as const
+            weight: 'bold' // Changed from '600' to 'bold'
           }
         }
       },
@@ -67,7 +67,7 @@ export default function SkillsChart() {
         padding: 12,
         titleFont: {
           size: 14,
-          weight: 'bold' as const
+          weight: 'bold'
         },
         bodyFont: {
           size: 13
