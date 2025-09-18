@@ -3,6 +3,7 @@
 import { Card, Metric, Text, Grid } from '@tremor/react';
 import { useState, useEffect } from 'react';
 import { UserGroupIcon, ChartBarIcon, ClockIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import studentsData from '../data/students.json';
 
 interface Stats {
   totalStudents: number;
@@ -20,11 +21,37 @@ export default function OverviewStats() {
   });
 
   useEffect(() => {
+    // Calculate real statistics from the 1000-student dataset
+    const students = studentsData as any[];
+    const totalStudents = students.length;
+    
+    // Calculate averages
+    const avgScore = students.reduce((sum, s) => sum + s.assessment_score, 0) / totalStudents;
+    const avgEngagement = students.reduce((sum, s) => sum + s.engagement_time, 0) / totalStudents;
+    
+    // Calculate average for each skill to find top skill
+    const avgComprehension = students.reduce((sum, s) => sum + s.comprehension, 0) / totalStudents;
+    const avgAttention = students.reduce((sum, s) => sum + s.attention, 0) / totalStudents;
+    const avgFocus = students.reduce((sum, s) => sum + s.focus, 0) / totalStudents;
+    const avgRetention = students.reduce((sum, s) => sum + s.retention, 0) / totalStudents;
+    
+    // Find the skill with highest average
+    const skills = {
+      'Comprehension': avgComprehension,
+      'Attention': avgAttention,
+      'Focus': avgFocus,
+      'Retention': avgRetention
+    };
+    
+    const topSkill = Object.entries(skills).reduce((a, b) => 
+      skills[a[0] as keyof typeof skills] > skills[b[0] as keyof typeof skills] ? a : b
+    )[0];
+    
     setStats({
-      totalStudents: 1000,
-      avgScore: 75.8,
-      avgEngagement: 45.2,
-      topSkill: 'Focus',
+      totalStudents,
+      avgScore,
+      avgEngagement,
+      topSkill,
     });
   }, []);
 

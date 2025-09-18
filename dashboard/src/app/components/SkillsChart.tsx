@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,6 +17,7 @@ import {
 } from 'chart.js';
 import { Bar, Radar } from 'react-chartjs-2';
 import { Text } from '@tremor/react';
+import studentsData from '../data/students.json';
 
 ChartJS.register(
   CategoryScale,
@@ -33,9 +34,23 @@ ChartJS.register(
 
 export default function SkillsChart() {
   const [activeChart, setActiveChart] = useState('bar');
+  const [scores, setScores] = useState([0, 0, 0, 0, 0]);
   
   const labels = ['Comprehension', 'Attention', 'Focus', 'Retention', 'Engagement'];
-  const scores = [74, 74, 76, 76, 45];
+
+  useEffect(() => {
+    // Calculate real averages from the 1000-student dataset
+    const students = studentsData as any[];
+    const totalStudents = students.length;
+    
+    const avgComprehension = Math.round(students.reduce((sum, s) => sum + s.comprehension, 0) / totalStudents);
+    const avgAttention = Math.round(students.reduce((sum, s) => sum + s.attention, 0) / totalStudents);
+    const avgFocus = Math.round(students.reduce((sum, s) => sum + s.focus, 0) / totalStudents);
+    const avgRetention = Math.round(students.reduce((sum, s) => sum + s.retention, 0) / totalStudents);
+    const avgEngagement = Math.round(students.reduce((sum, s) => sum + s.engagement_time, 0) / totalStudents);
+    
+    setScores([avgComprehension, avgAttention, avgFocus, avgRetention, avgEngagement]);
+  }, []);
 
   const barData = {
     labels,
